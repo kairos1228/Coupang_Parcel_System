@@ -22,3 +22,17 @@ ipch/
 # 기타
 .DS_Store
 .vs/
+
+# Visual Studio build artifacts
+x64/
+Debug/
+Release/
+*.obj
+*.log
+*.tlog
+*.pch
+*.ipch
+*.ilk
+*.pdb
+*.exe
+*.vc.db
