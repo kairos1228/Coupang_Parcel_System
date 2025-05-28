@@ -1,4 +1,4 @@
-
+﻿
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QPushButton, QLineEdit,
     QVBoxLayout, QHBoxLayout, QRadioButton, QSpinBox, QMessageBox
