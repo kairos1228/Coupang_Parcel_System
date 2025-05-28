@@ -1,6 +1,18 @@
 # 📦 Coupang Parcel Project
 
-**쿠팡 택배 상하차 관리 시스템**  
+<aside>
+📊
+
+> **쿠팡 허브센터 택배 정렬 시스템**
+> 
+> 
+> *Coupang Hub Parcel Dispatch Manager*
+> 
+
+**Tree & Linked List 기반 지역 분류 및 WOW 우선 출고 시뮬레이터**
+
+</aside>
+ 
 자료구조 수업 기말 프로젝트 (2025-1)
 
 ---
