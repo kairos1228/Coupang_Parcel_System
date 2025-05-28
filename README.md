@@ -9,11 +9,11 @@
 > *Coupang Hub Parcel Dispatch Manager*
 > 
 
-**Tree & Linked List 기반 지역 분류 및 WOW 우선 출고 시뮬레이터**
+**Tree & Linked List 기반 지역 분류 및 WOW 우선 출고 시뮬레이터** - 자료구조 수업 기말 프로젝트 (2025-1)
 
 </aside>
  
-자료구조 수업 기말 프로젝트 (2025-1)
+
 
 ---
 
