@@ -76,7 +76,7 @@ class ParcelSimulator(QWidget):
             parcels.append(parcel)
 
         # 저장
-        output_path = os.path.join("..", "data", "seoul_parcels_gui.json")
+        output_path = os.path.join(".", "data", "seoul_parcels_gui.json")
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(parcels, f, ensure_ascii=False, indent=2)
 

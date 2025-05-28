@@ -2,9 +2,9 @@
 import json
 import os
 
-base_path = "../data/seoul_parcels.json"
-gui_path = "../data/seoul_parcels_gui.json"
-merged_path = "../data/merged_parcels.json"
+base_path = "./data/seoul_parcels.json"
+gui_path = "./data/seoul_parcels_gui.json"
+merged_path = "./data/merged_parcels.json"
 
 merged = []
 

@@ -13,7 +13,7 @@ int main() {
     printf("========== 쿠팡 허브센터 시뮬레이터 ==========");
 
     // 0. 프로그램 시작 시 AWS 정제 데이터 기본 다운로드
-    int result = system("curl -s -o ../data/seoul_parcels.json https://seoul-parcel-data.s3.ap-northeast-2.amazonaws.com/seoul_parcels.json");
+    int result = system("curl -s -o ./data/seoul_parcels.json https://seoul-parcel-data.s3.ap-northeast-2.amazonaws.com/seoul_parcels.json");
     if (result != 0) {
         printf("\nAWS JSON 다운로드 실패. 프로그램을 종료합니다.\n");
         return 1;
@@ -33,14 +33,14 @@ int main() {
         if (menu == 1) {
             // PyQt5 GUI 실행
             printf("\n택배 등록 입력창 실행 중...\n");
-            system("python ../gui/parcel_simulator.py");
+            system("python ./gui/parcel_simulator.py");
 
             // 병합 스크립트 실행 (AWS + GUI 데이터)
             printf("\n입력 데이터 병합 중...\n");
-            system("python ../api_test/merge_gui_and_base.py");
+            system("python ./api_test/merge_gui_and_base.py");
 
             // 병합된 JSON 파일 삽입
-            load_parcels_from_file("../data/merged_parcels.json", &root);
+            load_parcels_from_file("./data/merged_parcels.json", &root);
             printf("\n택배 등록 및 자료구조 반영 완료.\n");
 
         }
