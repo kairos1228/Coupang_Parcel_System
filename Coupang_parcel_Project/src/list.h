@@ -5,8 +5,8 @@
 
 typedef struct Parcel {
     int id;
-    char name[50];            // 수취인 이름
-    char address[100];        // 전체 주소
+    char* name;            // 수취인 이름
+    char* address;        // 전체 주소
     bool is_wow;              // WOW 회원 여부
     struct Parcel* next;      // 연결 리스트 다음 포인터
 } Parcel;

@@ -4,6 +4,7 @@
 #include "parser.h"
 #include "tree.h"
 #include "list.h"
+#define _CRT_SECURE_NO_WARNINGS
 
 int main() {
     TreeNode* root = NULL;
