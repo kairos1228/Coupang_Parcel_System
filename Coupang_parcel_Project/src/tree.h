@@ -5,7 +5,7 @@
 #include "list.h"
 
 typedef struct TreeNode {
-    char gu_name[50];                     // 구 이름 (예: "강남")
+    char* gu_name;                     // 구 이름 (예: "강남")
     Parcel* parcel_list_head;             // 연결 리스트의 시작 포인터
     struct TreeNode* left;                // 왼쪽 자식
     struct TreeNode* right;               // 오른쪽 자식

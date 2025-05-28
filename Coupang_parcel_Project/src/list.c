@@ -1,26 +1,23 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "list.h"  
+#include "list.h"
 
-// Parcel 구조체 생성 및 초기화
+static int next_id = 1;
+
 Parcel* create_parcel(const char* name, const char* address, bool is_wow) {
     Parcel* new_parcel = (Parcel*)malloc(sizeof(Parcel));
-    if (new_parcel == NULL) {
-        fprintf(stderr, "메모리 할당 실패\n");
-        exit(1);
-    }
+    if (!new_parcel) exit(EXIT_FAILURE);
 
+    new_parcel->id = next_id++;
     new_parcel->name = (char*)malloc(strlen(name) + 1);
     new_parcel->address = (char*)malloc(strlen(address) + 1);
-    if (new_parcel->name == NULL || new_parcel->address == NULL) {
-        fprintf(stderr, "문자열 메모리 할당 실패\n");
-        exit(1);
-    }
 
-    strcpy(new_parcel->name, name);
+    strcpy(new_parcel->name, name);       // 단순한 strcpy 사용
     strcpy(new_parcel->address, address);
+
     new_parcel->is_wow = is_wow;
     new_parcel->next = NULL;
 

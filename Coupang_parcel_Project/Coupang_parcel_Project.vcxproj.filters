@@ -18,13 +18,16 @@
     <ClCompile Include="src\list.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="src\main.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="src\parser.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="src\tree.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cJSON.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -36,6 +39,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="src\tree.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="src\cJSON.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

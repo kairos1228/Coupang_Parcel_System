@@ -124,12 +124,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\cJSON.c" />
     <ClCompile Include="src\list.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\parser.c" />
     <ClCompile Include="src\tree.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\cJSON.h" />
     <ClInclude Include="src\list.h" />
     <ClInclude Include="src\parser.h" />
     <ClInclude Include="src\tree.h" />
