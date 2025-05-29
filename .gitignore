@@ -11,9 +11,6 @@
 __pycache__/
 *.pyc
 
-# JSON 등 민감한 데이터
-*.json
-
 # VS 설정 백업 파일
 *.VC.db
 ipch/
