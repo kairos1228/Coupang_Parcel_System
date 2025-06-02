@@ -5,10 +5,10 @@
 
 typedef struct Parcel {
     int id;
-    char* name;            // ¼öÃëÀÎ ÀÌ¸§
-    char* address;        // ÀüÃ¼ ÁÖ¼Ò
-    bool is_wow;              // WOW È¸¿ø ¿©ºÎ
-    struct Parcel* next;      // ¿¬°á ¸®½ºÆ® ´ÙÀ½ Æ÷ÀÎÅÍ
+    char* name;            // ìˆ˜ì·¨ì¸ ì´ë¦„
+    char* address;        // ì „ì²´ ì£¼ì†Œ
+    bool is_wow;              // WOW íšŒì› ì—¬ë¶€
+    struct Parcel* next;      // ì—°ê²° ë¦¬ìŠ¤íŠ¸ ë‹¤ìŒ í¬ì¸í„°
 } Parcel;
 
 Parcel* create_parcel(const char* name, const char* address, bool is_wow);

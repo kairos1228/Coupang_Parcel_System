@@ -15,7 +15,7 @@ Parcel* create_parcel(const char* name, const char* address, bool is_wow) {
     new_parcel->name = (char*)malloc(strlen(name) + 1);
     new_parcel->address = (char*)malloc(strlen(address) + 1);
 
-    strcpy(new_parcel->name, name);       // ´Ü¼øÇÑ strcpy »ç¿ë
+    strcpy(new_parcel->name, name);       // ë‹¨ìˆœí•œ strcpy ì‚¬ìš©
     strcpy(new_parcel->address, address);
 
     new_parcel->is_wow = is_wow;
@@ -24,7 +24,7 @@ Parcel* create_parcel(const char* name, const char* address, bool is_wow) {
     return new_parcel;
 }
 
-// WOW ¿ì¼±¼øÀ§ ¿¬°á ¸®½ºÆ® »ðÀÔ
+// WOW ìš°ì„ ìˆœìœ„ ì—°ê²° ë¦¬ìŠ¤íŠ¸ ì‚½ìž…
 void insert_parcel(Parcel** head, Parcel* new_parcel) {
     if (*head == NULL) {
         *head = new_parcel;
@@ -35,7 +35,7 @@ void insert_parcel(Parcel** head, Parcel* new_parcel) {
     Parcel* prev = NULL;
 
     if (new_parcel->is_wow) {
-        // WOW °í°´: ¸¶Áö¸· WOW °í°´ µÚ¿¡ »ðÀÔ
+        // WOW ê³ ê°: ë§ˆì§€ë§‰ WOW ê³ ê° ë’¤ì— ì‚½ìž…
         while (current && current->is_wow) {
             prev = current;
             current = current->next;
@@ -50,7 +50,7 @@ void insert_parcel(Parcel** head, Parcel* new_parcel) {
         }
     }
     else {
-        // ÀÏ¹Ý °í°´: ¸®½ºÆ® ³¡¿¡ »ðÀÔ
+        // ì¼ë°˜ ê³ ê°: ë¦¬ìŠ¤íŠ¸ ëì— ì‚½ìž…
         while (current->next != NULL) {
             current = current->next;
         }
@@ -58,14 +58,14 @@ void insert_parcel(Parcel** head, Parcel* new_parcel) {
     }
 }
 
-// ¿¬°á ¸®½ºÆ® Ãâ·Â
+// ì—°ê²° ë¦¬ìŠ¤íŠ¸ ì¶œë ¥
 void print_parcels(Parcel* head) {
     Parcel* current = head;
     while (current != NULL) {
-        printf("ÀÌ¸§: %s, ÁÖ¼Ò: %s, %sÈ¸¿ø\n",
+        printf("ì´ë¦„: %s, ì£¼ì†Œ: %s, %síšŒì›\n",
             current->name,
             current->address,
-            current->is_wow ? "WOW" : "ÀÏ¹Ý");
+            current->is_wow ? "WOW" : "ì¼ë°˜");
         current = current->next;
     }
 }

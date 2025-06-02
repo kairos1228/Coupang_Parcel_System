@@ -1,12 +1,17 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <locale.h>  // 로케일 추가
+#include <windows.h>  // 콘솔 한글 출력 안정화
 #include "parser.h"
 #include "tree.h"
 #include "list.h"
 
 int main() {
+    setlocale(LC_ALL, "");  // 한글 출력 안정화
+    SetConsoleOutputCP(65001);  // UTF-8 코드페이지 직접 지정
+
     TreeNode* root = NULL;
     int menu;
 
@@ -19,7 +24,12 @@ int main() {
         return 1;
     }
     printf("\nAWS 정제 JSON 다운로드 완료: seoul_parcels.json\n");
-
+    
+    // 다음 코드를 추가하여 다운로드된 데이터를 즉시 로드 --> 1번을 실행하지 않아도 나머지가 실행되려면 로드해야함
+    printf("\n초기 AWS 데이터 로드 중...\n");
+    load_parcels_from_file("./data/seoul_parcels.json", &root); 
+    printf("초기 AWS 데이터 로드 완료.\n");
+    
     while (1) {
         printf("\n\n============ 쿠팡 허브센터 시뮬레이터 ============\n");    
         printf("1. 수동 택배 등록 (GUI 실행)\n");
@@ -29,6 +39,7 @@ int main() {
         printf("5. 종료\n");
         printf(">> 메뉴 선택: ");
         scanf("%d", &menu);
+        getchar();  // <-- 이거 추가 (버퍼에 남은 개행 제거)
 
         if (menu == 1) {
             // PyQt5 GUI 실행
@@ -46,8 +57,10 @@ int main() {
         }
         else if (menu == 2) {
             char gu[50];
-            printf("\n조회할 구를 입력하세요 (예: 강남): ");
-            scanf("%s", gu);
+            printf("\n조회할 구를 입력하세요 (예: 강남구): ");
+            fgets(gu, sizeof(gu), stdin);
+            gu[strcspn(gu, "\n")] = 0;  // 줄바꿈 제거
+           
             TreeNode* node = find_tree_node(root, gu);
             if (node && node->parcel_list_head) {
                 print_parcels(node->parcel_list_head);
@@ -62,7 +75,7 @@ int main() {
             print_all_parcels(root);
 
         }
-        else if (menu == 4) {
+        else if (menu == 4) { //문자열 기준 사전순 정렬
             printf("\n[지역 트리 구조 출력]\n");
             print_tree(root);
 

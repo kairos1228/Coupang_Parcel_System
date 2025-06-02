@@ -1,4 +1,3 @@
-// JSON ÆÄ½Ì ·ÎÁ÷ 
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,38 +7,50 @@
 #include "list.h"
 #include "tree.h"
 
+// BOM ì •ì˜ (ê°€ë…ì„± ìƒìŠ¹)
+#define UTF8_BOM "\xEF\xBB\xBF"
+
 void load_parcels_from_file(const char* filename, TreeNode** root) {
     FILE* file = fopen(filename, "rb");
     if (!file) {
-        fprintf(stderr, "ÆÄÀÏ ¿­±â ½ÇÆĞ: %s\n", filename);
+        fprintf(stderr, "íŒŒì¼ ì—´ê¸° ì‹¤íŒ¨: %s\n", filename);
         return;
     }
 
-    // ÆÄÀÏ Å©±â ±¸ÇÏ±â
+    // íŒŒì¼ í¬ê¸° êµ¬í•˜ê¸°
     fseek(file, 0, SEEK_END);
     long length = ftell(file);
     rewind(file);
 
-    // ÆÄÀÏ ³»¿ë ÀĞ±â
+    // íŒŒì¼ ë‚´ìš© ì½ê¸°
     char* data = (char*)malloc(length + 1);
     if (!data) {
-        fprintf(stderr, "¸Ş¸ğ¸® ÇÒ´ç ½ÇÆĞ\n");
+        fprintf(stderr, "ë©”ëª¨ë¦¬ í• ë‹¹ ì‹¤íŒ¨\n");
         fclose(file);
         return;
     }
     fread(data, 1, length, file);
-    data[length] = '\0';  // ¹®ÀÚ¿­ ³¡ Ç¥½Ã
+    data[length] = '\0';
     fclose(file);
 
-    // cJSON ÆÄ½Ì ½ÃÀÛ
-    cJSON* json = cJSON_Parse(data);
+    // BOM ì œê±° (ë” ì•ˆì „í•˜ê²Œ)
+    char* json_data = data;
+    if (length >= 3 && memcmp(data, UTF8_BOM, 3) == 0) {
+        printf("BOM ë°œê²¬ â†’ ì œê±° í›„ íŒŒì‹± ì§„í–‰\n");
+        json_data = data + 3;
+    }
+
+    // cJSON íŒŒì‹±
+    cJSON* json = cJSON_Parse(json_data);
     if (!json) {
-        fprintf(stderr, "JSON ÆÄ½Ì ½ÇÆĞ\n");
+        fprintf(stderr, "JSON íŒŒì‹± ì‹¤íŒ¨\n");
         free(data);
         return;
     }
 
     int count = cJSON_GetArraySize(json);
+    printf("ì´ %dê°œì˜ ë°ì´í„°ê°€ ë¡œë“œë˜ì—ˆìŠµë‹ˆë‹¤.\n", count);
+
     for (int i = 0; i < count; ++i) {
         cJSON* item = cJSON_GetArrayItem(json, i);
         cJSON* name_json = cJSON_GetObjectItem(item, "name");
@@ -47,31 +58,38 @@ void load_parcels_from_file(const char* filename, TreeNode** root) {
         cJSON* is_wow_json = cJSON_GetObjectItem(item, "is_wow");
 
         if (!cJSON_IsString(name_json) || !cJSON_IsString(address_json) || !cJSON_IsBool(is_wow_json)) {
-            continue; // Çü½Ä ¿À·ù ½Ã °Ç³Ê¶Ü
+            continue;
         }
 
         const char* name = name_json->valuestring;
         const char* address = address_json->valuestring;
         bool is_wow = cJSON_IsTrue(is_wow_json);
 
-        // ±¸ ÀÌ¸§ ÃßÃâ (¿¹: "¼­¿ïÆ¯º°½Ã °­³²±¸ ..." ¡æ "°­³²±¸")
+        //  êµ¬ ì¶”ì¶œ ì•ˆì •í™” í•µì‹¬ ë¡œì§:
         char gu_name[50] = { 0 };
-        const char* gu_start = strstr(address, "±¸");
-        if (gu_start != NULL) {
-            // "°­³²±¸" Ã£¾ÒÀ» ¶§, ¾Õ¿¡ ÀÖ´Â "°­³²" ÃßÃâ
-            const char* space_before = gu_start;
-            while (space_before > address && *(space_before - 1) != ' ') {
-                space_before--;
+        const char* start = strstr(address, "ì„œìš¸íŠ¹ë³„ì‹œ ");
+        if (start != NULL) {
+            start += strlen("ì„œìš¸íŠ¹ë³„ì‹œ ");
+
+            // êµ¬ ë‹¨ì–´ë§Œ ì¶”ì¶œ: ì²« ë²ˆì§¸ ê³µë°±ê¹Œì§€ ì¶”ì¶œ
+            const char* space = strchr(start, ' ');
+            if (space != NULL) {
+                int gu_len = space - start;
+                strncpy(gu_name, start, gu_len);
+                gu_name[gu_len] = '\0';
             }
-            size_t len = gu_start - space_before + strlen("±¸");
-            strncpy(gu_name, space_before, len);
-            gu_name[len] = '\0';
+            else {
+                // ê³µë°±ì´ ì—†ë‹¤ë©´ ì „ì²´ë¥¼ ë³µì‚¬ (ë§ˆì§€ë§‰ ì£¼ì†Œê¹Œì§€ ë‹¤ êµ¬ì¼ ìˆ˜ë„ ìˆìœ¼ë¯€ë¡œ)
+                strncpy(gu_name, start, sizeof(gu_name) - 1);
+            }
         }
         else {
-            strcpy(gu_name, "±âÅ¸");
+            strcpy(gu_name, "ê¸°íƒ€");
         }
 
-        // Parcel »ı¼º ¹× Æ®¸®¿¡ »ğÀÔ
+        printf("address: %s  -->  ì¶”ì¶œëœ êµ¬: %s\n", address, gu_name);
+
+        // Parcel ìƒì„± ë° íŠ¸ë¦¬ì— ì‚½ì…
         Parcel* p = create_parcel(name, address, is_wow);
         insert_parcel_to_tree(root, gu_name, p);
     }

@@ -592,5 +592,11 @@
     "name": "이지훈",
     "address": "서울특별시 성동구",
     "is_wow": false
+  },
+  {
+    "id": 100,
+    "name": "박준범",
+    "address": "서울특별시 은평구",
+    "is_wow": true
   }
 ]
