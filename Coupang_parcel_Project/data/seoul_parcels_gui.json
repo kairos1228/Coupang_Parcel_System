@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "박태정",
+    "address": "서울특별시 구로구",
+    "is_wow": false
+  },
+  {
+    "id": 2,
+    "name": "박태정",
+    "address": "서울특별시 구로구",
+    "is_wow": false
+  }
+]

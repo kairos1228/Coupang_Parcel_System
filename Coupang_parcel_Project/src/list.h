@@ -5,14 +5,16 @@
 
 typedef struct Parcel {
     int id;
-    char* name;            // ¼öÃëÀÎ ÀÌ¸§
-    char* address;        // ÀüÃ¼ ÁÖ¼Ò
-    bool is_wow;              // WOW È¸¿ø ¿©ºÎ
-    struct Parcel* next;      // ¿¬°á ¸®½ºÆ® ´ÙÀ½ Æ÷ÀÎÅÍ
+    char* name;            // ìˆ˜ì·¨ì¸ ì´ë¦„
+    char* address;        // ì „ì²´ ì£¼ì†Œ
+    bool is_wow;              // WOW íšŒì› ì—¬ë¶€
+    struct Parcel* next;      // ì—°ê²° ë¦¬ìŠ¤íŠ¸ ë‹¤ìŒ í¬ì¸í„°
 } Parcel;
 
 Parcel* create_parcel(const char* name, const char* address, bool is_wow);
 void insert_parcel(Parcel** head, Parcel* new_parcel);
 void print_parcels(Parcel* head);
+void print_parcel_list(Parcel* head);  // main.cì—ì„œ ì‚¬ìš© ì‹œ í•„ìš”
+void free_parcel_list(Parcel* head);
 
 #endif

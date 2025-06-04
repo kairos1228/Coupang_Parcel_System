@@ -1,14 +1,14 @@
-// JSON ÆÄ¼­ Çì´õ 
+// JSON íŒŒì„œ í—¤ë” 
 #ifndef PARSER_H
 #define PARSER_H
 
-#include "tree.h"  // TreeNode Á¤ÀÇ Æ÷ÇÔµÊ
-#include "list.h"  // Parcel Á¤ÀÇ Æ÷ÇÔµÊ
+#include "tree.h"  // TreeNode ì •ì˜ í¬í•¨ë¨
+#include "list.h"  // Parcel ì •ì˜ í¬í•¨ë¨
 
-// ³»ºÎÀûÀ¸·Î cJSON »ç¿ë
-#include "cJSON.h"  // ½ÇÁ¦ cJSON ¶óÀÌºê·¯¸® Çì´õ Æ÷ÇÔ
+// ë‚´ë¶€ì ìœ¼ë¡œ cJSON ì‚¬ìš©
+#include "cJSON.h"  // ì‹¤ì œ cJSON ë¼ì´ë¸ŒëŸ¬ë¦¬ í—¤ë” í¬í•¨
 
-// JSON ÆÄÀÏ ¡æ Æ®¸® »ğÀÔ ÇÔ¼ö
+// JSON íŒŒì¼ â†’ íŠ¸ë¦¬ ì‚½ì… í•¨ìˆ˜
 void load_parcels_from_file(const char* filename, TreeNode** root);
 
 #endif

@@ -5,10 +5,10 @@
 #include "list.h"
 
 typedef struct TreeNode {
-    char* gu_name;                     // ±¸ ÀÌ¸§ (¿¹: "°­³²")
-    Parcel* parcel_list_head;             // ¿¬°á ¸®½ºÆ®ÀÇ ½ÃÀÛ Æ÷ÀÎÅÍ
-    struct TreeNode* left;                // ¿ŞÂÊ ÀÚ½Ä
-    struct TreeNode* right;               // ¿À¸¥ÂÊ ÀÚ½Ä
+    char* gu_name;                     // êµ¬ ì´ë¦„ (ì˜ˆ: "ê°•ë‚¨")
+    Parcel* parcel_list_head;             // ì—°ê²° ë¦¬ìŠ¤íŠ¸ì˜ ì‹œì‘ í¬ì¸í„°
+    struct TreeNode* left;                // ì™¼ìª½ ìì‹
+    struct TreeNode* right;               // ì˜¤ë¥¸ìª½ ìì‹
 } TreeNode;
 
 TreeNode* create_tree_node(const char* gu_name);
@@ -16,5 +16,7 @@ void insert_parcel_to_tree(TreeNode** root, const char* gu_name, Parcel* parcel)
 TreeNode* find_tree_node(TreeNode* root, const char* gu_name);
 void print_tree(TreeNode* root);
 void print_all_parcels(TreeNode* root);
+void free_tree(TreeNode* root);
+
 
 #endif

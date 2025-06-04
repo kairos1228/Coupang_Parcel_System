@@ -1,11 +1,12 @@
-﻿
-from PyQt5.QtWidgets import (
+﻿from PyQt5.QtWidgets import (
     QApplication, QWidget, QLabel, QPushButton, QLineEdit,
     QVBoxLayout, QHBoxLayout, QRadioButton, QSpinBox, QMessageBox
 )
 import json
 import sys
 import os
+import re
+import subprocess
 
 class ParcelSimulator(QWidget):
     def __init__(self):
@@ -18,7 +19,7 @@ class ParcelSimulator(QWidget):
         self.name_input = QLineEdit()
 
         # 주소 입력
-        self.address_label = QLabel("주소 (서울특별시 ○○구 ○○동):")
+        self.address_label = QLabel("주소 (서울특별시 ○○구):")
         self.address_input = QLineEdit()
 
         # WOW 여부
@@ -55,13 +56,19 @@ class ParcelSimulator(QWidget):
         self.setLayout(layout)
 
     def register_parcels(self):
-        name = self.name_input.text()
-        address = self.address_input.text()
+        name = self.name_input.text().strip()
+        address = self.address_input.text().strip()
         is_wow = self.wow_yes.isChecked()
         count = self.count_input.value()
 
         if not name or not address:
             QMessageBox.warning(self, "입력 오류", "이름과 주소를 모두 입력하세요.")
+            return
+
+        # 주소 형식 검사: 서울특별시 ○○구까지만 허용
+        pattern = r"^서울특별시\s.+구$"
+        if not re.match(pattern, address):
+            QMessageBox.warning(self, "주소 오류", "주소는 '서울특별시 ○○구' 형식으로 입력해주세요.\n(예: 서울특별시 강남구)")
             return
 
         # 데이터 생성
@@ -79,6 +86,9 @@ class ParcelSimulator(QWidget):
         output_path = os.path.join(".", "data", "seoul_parcels_gui.json")
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(parcels, f, ensure_ascii=False, indent=2)
+
+        # 병합 및 AWS 업로드 자동 실행
+        subprocess.run(["python", "./api_test/merge_gui_and_base.py"])
 
         QMessageBox.information(self, "등록 완료", f"{count}건의 택배가 등록되었습니다.")
         self.name_input.clear()

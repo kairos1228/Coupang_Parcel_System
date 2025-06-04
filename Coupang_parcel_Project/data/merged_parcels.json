@@ -592,5 +592,35 @@
     "name": "이지훈",
     "address": "서울특별시 성동구",
     "is_wow": false
+  },
+  {
+    "id": 100,
+    "name": "백승찬",
+    "address": "서울특별시 중구",
+    "is_wow": true
+  },
+  {
+    "id": 101,
+    "name": "박준범",
+    "address": "서울특별시 구로구",
+    "is_wow": false
+  },
+  {
+    "id": 102,
+    "name": "김성한",
+    "address": "서울특별시 구로구",
+    "is_wow": false
+  },
+  {
+    "id": 103,
+    "name": "박태정",
+    "address": "서울특별시 구로구",
+    "is_wow": false
+  },
+  {
+    "id": 104,
+    "name": "박태정",
+    "address": "서울특별시 구로구",
+    "is_wow": false
   }
 ]

@@ -5,17 +5,17 @@
 #include "tree.h"
 #include "list.h"
 
-// »õ Æ®¸® ³ëµå »ı¼º
+// ìƒˆ íŠ¸ë¦¬ ë…¸ë“œ ìƒì„±
 TreeNode* create_tree_node(const char* gu_name) {
     TreeNode* new_node = (TreeNode*)malloc(sizeof(TreeNode));
     if (new_node == NULL) {
-        fprintf(stderr, "Æ®¸® ³ëµå ¸Ş¸ğ¸® ÇÒ´ç ½ÇÆĞ\n");
+        fprintf(stderr, "íŠ¸ë¦¬ ë…¸ë“œ ë©”ëª¨ë¦¬ í• ë‹¹ ì‹¤íŒ¨\n");
         exit(EXIT_FAILURE);
     }
 
     new_node->gu_name = (char*)malloc(strlen(gu_name) + 1);
     if (new_node->gu_name == NULL) {
-        fprintf(stderr, "±¸ ÀÌ¸§ ¸Ş¸ğ¸® ÇÒ´ç ½ÇÆĞ\n");
+        fprintf(stderr, "êµ¬ ì´ë¦„ ë©”ëª¨ë¦¬ í• ë‹¹ ì‹¤íŒ¨\n");
         exit(EXIT_FAILURE);
     }
     strcpy(new_node->gu_name, gu_name);
@@ -26,7 +26,7 @@ TreeNode* create_tree_node(const char* gu_name) {
     return new_node;
 }
 
-// ±¸ ÀÌ¸§À¸·Î Æ®¸® Å½»ö
+// êµ¬ ì´ë¦„ìœ¼ë¡œ íŠ¸ë¦¬ íƒìƒ‰
 TreeNode* find_tree_node(TreeNode* root, const char* gu_name) {
     if (root == NULL) return NULL;
 
@@ -36,7 +36,7 @@ TreeNode* find_tree_node(TreeNode* root, const char* gu_name) {
     else return find_tree_node(root->right, gu_name);
 }
 
-// Æ®¸®¿¡ ÅÃ¹è »ğÀÔ
+// íŠ¸ë¦¬ì— íƒë°° ì‚½ì…
 void insert_parcel_to_tree(TreeNode** root, const char* gu_name, Parcel* p) {
     if (*root == NULL) {
         *root = create_tree_node(gu_name);
@@ -54,25 +54,36 @@ void insert_parcel_to_tree(TreeNode** root, const char* gu_name, Parcel* p) {
     }
 }
 
-// ÁßÀ§ ¼øÈ¸·Î Æ®¸® Ãâ·Â (±¸ ÀÌ¸§ ±âÁØ)
+// ì¤‘ìœ„ ìˆœíšŒë¡œ íŠ¸ë¦¬ ì¶œë ¥ (êµ¬ ì´ë¦„ ê¸°ì¤€)
 void print_tree(TreeNode* root) {
     if (root == NULL) return;
     print_tree(root->left);
-    printf("±¸: %s\n", root->gu_name);
+    printf("%s\n", root->gu_name);
     print_tree(root->right);
 }
 
-// Æ®¸® ÀüÃ¼ ÅÃ¹è Ãâ·Â
+// íŠ¸ë¦¬ ì „ì²´ íƒë°° ì¶œë ¥
 void print_all_parcels(TreeNode* root) {
-    if (root == NULL) return;
+    if (root == NULL)
+        return;
+
     print_all_parcels(root->left);
 
-    printf("\n[ %s ±¸]\n", root->gu_name);
-    if (root->parcel_list_head == NULL)
-        printf("  ÅÃ¹è ¾øÀ½\n");
-    else
-        print_parcels(root->parcel_list_head);
+    printf("[%s]\n", root->gu_name);
+    Parcel* current = root->parcel_list_head;
+    while (current != NULL) {
+        printf("  - %s (%s)\n", current->name, current->is_wow ? "WOW" : "ì¼ë°˜");
+        current = current->next;
+    }
 
     print_all_parcels(root->right);
+}
+
+void free_tree(TreeNode* root) {
+    if (root == NULL) return;
+    free_tree(root->left);
+    free_tree(root->right);
+    free_parcel_list(root->parcel_list_head);  // parcel_listê°€ ì—°ê²° ë¦¬ìŠ¤íŠ¸ì¸ ê²½ìš°
+    free(root);
 }
 
