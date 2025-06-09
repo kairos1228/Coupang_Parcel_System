@@ -18,17 +18,10 @@ int main() {
 
     printf("========== 쿠팡 허브센터 시뮬레이터 ==========\n");
 
-    // 우선 merged_parcels.json 이 있으면 우선 불러오기
-    if (_access("./data/merged_parcels.json", 0) == 0) {
-        printf("📦 기존 병합 데이터 로딩 중...\n");
-        load_parcels_from_file("./data/merged_parcels.json", &root);
-    }
-    else {
-        // 없으면 seoul_parcels.json 불러오기
-        printf("🌐 AWS JSON 다운로드 및 초기 데이터 로딩 중...\n");
-        system("python ./api_test/download_merged_json.py");
-        load_parcels_from_file("./data/seoul_parcels.json", &root);
-    }
+	// AWS S3 데이터셋 로드 
+    printf("🌐 AWS JSON 다운로드 및 초기 데이터 로딩 중...\n");
+    system("python ./api_test/download_dataset_json.py");
+    load_parcels_from_file("./data/seoul_parcels.json", &root);
 
     int choice;
     do {
@@ -53,7 +46,7 @@ int main() {
         }
         else if (choice == 2) {
             char gu[100];
-            printf("조회할 구 이름 입력 (예: 강남구): ");
+            printf("조회할 구 이름 입력 (예: 강서구): ");
             scanf("%s", gu);
             TreeNode* gu_node = find_tree_node(root, gu);
 
